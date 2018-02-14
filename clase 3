@@ -1,0 +1,25 @@
+#ahora vamos a intentar una serie de tiempo con datos faltantes 
+##datos de registro de enfermos del 2000-2010 semestral
+##350,358,367,380,388,402,415,432,450,
+##NA,NA,NA,NA,367,342,324,315,310,298,
+#Graficar el vector 
+#declarar y gfraficar la serie 
+#imputar  los datos faltantes como lo  harian ?
+#graficar la nueva serie con la imputacion 
+#graficar la serie de tiempo 
+#EuStockMarkets con la funcion plot que observan?
+#ahora grafiquen  EuStockMarkets con la sig funcion 
+#plot.ts(EuStockMarkets,col=1:4)
+serie<-c(350,358,367,367,380,388,402,415,432,450,NA,NA,NA,NA,367,342,324,315,310,298)
+plot(serie)
+seriets<-ts(serie,start = 2000,end = 2010,frequency = 2)
+plot(seriets)
+#imputar datos faltantes 
+mean(seriets,na.rm = T)# me remueva los datos de na y me saque la media de los otros 
+#voy a imputar por la media 
+seriets[11:14]<-mean(seriets,na.rm=T)
+plot(seriets)
+
+##voy a usar la funcion EuStockMarket
+plot(EuStockMarkets)
+ts.plot(EuStockMarkets,col=1:4)
