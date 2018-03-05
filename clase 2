@@ -1,0 +1,29 @@
+##############la funcion descompose  en R logra obtener los 3 componentes 
+###a traves la funcion calcula el componentes de tendencia utulizando medias 
+#####mA*viles ,la estacijalidad son promedios de los indices de estacionalidad 
+#que se  obtienen al desestacionalizar la serie por el modelo alegido 
+###por ultimo el componente aleatorio se obtiene eliminando la tendencia y
+####estacionalidad de la serie temporal 
+##el otro metodo de descomposoicion es la fucnion stl()que esta basada en la regresion 
+### Loess y consiste una secuencia de dos aplicaciones iteradas 
+#de regresion loess para aplicar este metodo se debe especificar
+####una frecuencia de mesutreo relacionada con el peridodo de la componente estacional 
+####### T - PROMEDIOS MOVILES 
+######3 S- PROMEDIO POR PERIODO 
+####### E- UNA VEZ QUE SE CALCULA T y S SE SUSITUYA PARA ENCONTRR e
+######## Yt=Tt+St+Et
+installed.packages("fpp")##########bajamos la paqueteria 
+installed.packages("forecast")
+
+require(fpp)#####la madamos a llamar 
+require(forecast)
+deso<-read.csv("C://Users//USUARIO//Desktop//deso.csv")
+tsdeso<-ts(deso,frequency = 4,start = 2005)
+tsdeso0<-ts(deso[1:52,],frequency=4,start=2005)##########se declara 
+a0<-descompose(tsdeso0)####descompusimos y pusimos nombre 
+name (a0)######
+a1<-stl(tsdeso0,s.window = 4)####descompsicion 
+name(a1)
+a1$time.series####base de donde se obtiene 
+x11()
+plot(tsdeso0,col(="blue",main="desocupacion trimestral",ylab="tasa de desocupacion",xlab="años")
