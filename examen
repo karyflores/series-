@@ -1,0 +1,57 @@
+##generar 4 series e tiempo con nombre multiple 
+#los rangos de esta serie son series 1) de 15 a 35 
+#2)de 100 a 200,3)29 a 49 y 4)42 a 162 
+#las series deben de tener 250 mensuales e inician en el tercer mes de 1990 
+#hacer estos datos como data frame 
+# generar cada una de las columnas en series de tiempo 
+#1.1) de la serie 1, 2 series de tiempo y dividelas (con funcion en r )
+#en 2 series que vayan de 1990 a 2003 y de 1998 a 2006 y despues grafiquenlas 
+#1.2)dividir la serie 3 y 5 a traves de corchetes desde la observacion 150 a la 250 
+#1.2 de 2 serie (la que quieran )serie obtener y generar 2 data grame de la tendencia y la estacionalidad
+
+serie1<-sample(15:35,250,replace=T)
+serie1
+serie2<-sample(100:200,250,replace =T)
+serie2
+serie3<-sample(29:49,250,replace=T)
+serie3
+serie4<-sample(42:162,250,replace=T)
+serie4
+tss1<-ts(serie1,frequency = 12,start = 1990)
+tss2<-ts(serie2,frequency = 12,start = 1990)
+tss3<-ts(serie3,frequency = 12,start = 1990)
+tss4<-ts(serie4,frequency = 12,start = 1990)
+
+x<-data.frame(tss1,tss2,tss3,tss4)
+tsx<-ts(x[3:250,],frequency = 12,start = 1990)
+tsx
+install.packages("forecast")
+require(forecast)
+
+div1<- window(tss1, start = 1990, end = 2003)
+div1.1<- window(tss1, start = 1998, end = 2006)
+div2<- window(tss2, start = 1998, end = 2006)
+div2.1<- window(tss1, start = 1990, end = 2003)
+plot(div1, main="1990-2003", sub="serie de tiempo" ,col="blue")
+plot(div2, main="1998-2006", sub="serie de tiempo" ,col="red")
+div3<-window(tss3[150:250])
+div3
+div4<-window(tss4[150:250])
+##otra forma de dividir
+s3p1<-ts(tss3[150:250],start = c(1990,3))
+
+###
+a1<- stl(tss1, s.window=4)
+names(a1)
+
+a1$time.series
+a1<- stl(tsdisp0, s.window=4)
+names(a1)
+a1$time.series
+##para sacar la estacionalidad 
+deco1<-decompose(tss1)
+base1<-data.frame(deco1$seasonal,decos$trend)
+deco2<-stl(tss2,s.window=12)
+base2<-(deco2$time.serie)
+
+
