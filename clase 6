@@ -1,0 +1,50 @@
+## como hacer pronosticos con medias moviles
+############################################
+## hacer presentaciones en r
+rmarkdown::
+  
+#############
+### orden 5 que tantos valores quieres sacarle la media en este caso a 5 datos primeros
+## divide el orden en 5
+## la mitad de un orden 5 es 2.5 
+# en este caso no conocemos los años partidos en 2.5 
+# lo que hace es hacer una media de los 5 datos y asi se va moviendo 
+### medias moviles
+install.packages("forecast")
+require(forecast)
+crim1 <- c(12632,13607,12160,13335,14553,14654,12791,11923,10225,9847)
+tscrim <- ts( crim1, start = 1980)
+ma(tscrim,order=4)
+
+## times series
+# start =1980
+# end= 1989
+#frequency=1
+ma5crim <- c( NA    ,  NA, 13257.4, 13661.8 ,13498.6 ,13451.2 ,12829.2 ,11888.0  ,    NA  ,    NA)
+macrim <- data.frame(crim1,ma5crim)
+# en el data frame en la segunda columna se tiene el promedio movil de orden 5
+# que expone un estimado de la tendencia, el primer valos es el promedio de las primeras 
+# 5 observaciones, el segundo valor corresponde a el promedio de loas vvalores de 1981 a 1985 y asi
+# sucesivamente, no existen valores para los dos primeros años ni para los dos ultimos , debido a que no
+# existen datos para estos valores por ser un promedio moviles de orden 5,
+# en la ecuacion expuesta si m=5 entonces k=2 .. m= 2(k)+
+
+
+plot(tscrim, main="crimen mexico orden 5", ylab="millones de personas",xlab="años")
+lines(ma(tscrim,5),col="red")
+
+
+plot(tscrim, main="crimen mexico orden 3", ylab="millones de personas",xlab="años")
+lines(ma(tscrim,3),col="red")
+
+
+plot(tscrim, main="crimen mexico orden 4", ylab="millones de personas",xlab="años")
+lines(ma(tscrim,4),col="red")
+## ordenes mas pequeños con series de mayor cambio
+
+
+## como se puede observar en las graficas de tendencia se observa de color rojo
+# y esta mas suavizada que la serie, el principal movimiento se detecta sin todas las pequeños cambios
+# el promedio no estima la tendencia al inicio y al final de la serie despues hay metodos que si permiten
+# estimar el inicio y el final de la tendencia. El orden de promedios moviles determina el savizado 
+# de la tendencia, en general un orden grande significa una curva mas suavizada
