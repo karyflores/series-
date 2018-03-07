@@ -1,0 +1,59 @@
+## modelos lineales para pronosticos 
+#son las aplicaciones de pronosticos lineales como los metodos de la media , el inenuo , el ingenuo estacional 
+#y el que deriva el pronostico 
+##ingenuo 
+##esta basado en la ultima observacion que arroja la serie de tiempo , es decir este pronostico asume que la observacion mas importznte 
+#es la ultima 
+##funcion en R -->naive(serie,h=num pronosticos)
+##h=numero de pronosticos que requiero
+
+##metodo de la media 
+##este metodo le da el mismo peso a todos los datos u observaciones ,se asume que con este 
+#metodo que todas las observaciones tienen la mismaimportancia por lo que el pronostico es un promedio de todas
+#las observaciones 
+#funcion en r-<<meanf(serie,h=numero de pronosticos)
+##ingenuo estacional
+# este metodo se utilza  en ST con alta estacionalidad este proceso consiste en darle el mayor peso o la  mayor
+#ponderacion al dato del mismo periodo en el año anterior , p.ejem. trimestre 2 al 2005 es
+#igual al trimestre 2 del 2006  funcion en r -->snaive(serie,h=numero de pronosticos)
+##Metod de la deriva 
+###este metodo consiste en que el pronostico puede incrementar o reducirse sobre el tiempo ,dependiendo del promedio de los cambios
+#historico de la ST
+#funcion en r --> rwf(serie,h=num de pronostico,drift=True)
+#
+
+##ejercicio 
+des0<-read.csv("nombre del archivo ")
+dests<-ts(deso0,start=2005,frequency = 4)
+install.packages("fpp")
+require(fpp)
+dests
+desocod1<-meanf(dests,h=10)## son  10 periodos 
+desocod2<-naive(dests,h=10)
+desocod3<-snaive(dests,h=10)
+desocod4<-rwf(dests,h=10,drift=TRUE)
+x11()
+plot(desocod1,main="tasa de desocupacion trimestral",col="green")
+lines(desocod1$mean,col="green")
+lines(desocod2$mean,col="blak")
+lines(desocod3$mean,col="gray")
+lines(desocod4$mean,col="orange")
+legend("topleft",lty=1,col=c("gren","black","gray","orange"),legend = c("media","ingenuu","ingenuo estacional","deriva"))
+
+
+#tengo que hacer un ajuste de mis datos reales y voy hacer un estimado 
+
+##ajustados 
+##names (puedo ver que elemntos tengo con deso$mod veo los pronosticos )
+names(desocmod1)
+#fitted #datos ajustados 
+#residualsdatos reales menos tus datos  estimados 
+
+
+##ejercicio
+#apliquen los 4 metodos de pronosticos y grafiquenlos  segun las graficas elijan que metodos es el mejor para pronosticar 
+#y tambien grafiquen los datos ajustados y planteen segun su grafica cual es el metodo que mejor ajusta a los datos reales 
+
+
+##buscar precios de cierre al año  de invex  desde hoy 
+#hacer la grafica de pronosticos y la grafica de ajustados la desicion de si me quedo es en base en la grafica de pronosticos 
