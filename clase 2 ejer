@@ -1,0 +1,22 @@
+### grafique este vector
+# declaren y grafique la serie
+# imputar datos daltantes ¿ como se hara?
+# grafique la nueva serie con la imputacion
+# graficar la serie
+# eustockMarkets con la funcionplot ... que se observa?
+x <- data.frame("datos"=c(350, 358, 367, 367, 380 , 388, 402, 415, 432, 450,NA,NA,NA,NA,367, 342, 324, 315, 310, 298))
+View(x)
+plot(x)
+#serie
+pobts1<- ts(x,frequency = 2,start = (2000),end = 2010)
+plot(pobts1)
+
+# pegar la media de la serie en los datos faltantes
+pobts1[11:14] <-mean(pobts1,na.rm = T)
+pobts1
+plot(pobts1)
+#ver la serie que esta cargada 
+plot(EuStockMarkets)
+## nos arroja una multiple serie de tiempo 
+## graficar con la siguiente funcion que nos grafica una sola grafica
+ts.plot(EuStockMarkets,col=1:4)
