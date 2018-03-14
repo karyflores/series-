@@ -1,0 +1,77 @@
+accidente<- read.csv("C://Users//USUARIO//Desktop//accidentes.csv")
+#View(accidente)
+#acci1<-rbind(accidente[6:17,])
+#View(acci1)
+#a<-cbind(acci1)[,2]
+acci1<-accidente[-1,]
+acci1<-accidente[,-1]
+acci1<-accidente[,-5]
+trs<-t(t(acci1))#Para convertir en caracter sin modificar los años de nuestra data
+ctrs<-c(trs)#Genera un array 
+accts<-ts(ctrs, frequency = 12, start = 1996)
+## se sigue con la clase 
+
+acci<-data.frame (read.csv("C://Users//USUARIO//Desktop//accidentes.csv"))
+View(acci)
+#rbind jala los renglones , pone los renglones uno sobre otro y en este caso es para que me de el 5 al 16
+#el as.matrix me lo cambia  a matris
+-x <-rbind(acci)[6:17,]
+-View(x)
+-
+-y <- as.matrix(rbind(x)[,2])
+-a <- as.matrix(rbind(x)[,3])
+-b <- as.matrix(rbind(x)[,4])
+-c <- as.matrix(rbind(x)[,5])
+-d <- as.matrix(rbind(x)[,6])
+-e <- as.matrix(rbind(x)[,7])
+-f <- as.matrix(rbind(x)[,8])
+-g <- as.matrix(rbind(x)[,9])
+-h <- as.matrix(rbind(x)[,10])
+-i <- as.matrix(rbind(x)[,11])
+-j <- as.matrix(rbind(x)[,12])
+-k <- as.matrix(rbind(x)[,13])
+-l <- as.matrix(rbind(x)[,14])
+-m <- as.matrix(rbind(x)[,15])
+-n <- as.matrix(rbind(x)[,16])
+-o <- as.matrix(rbind(x)[,17])
+-p <- as.matrix(rbind(x)[,18])
+-q <- as.matrix(rbind(x)[,19])
+-r <- as.matrix(rbind(x)[,20])
+-s <- as.matrix(rbind(x)[,21])
+-serie <- rbind(y,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s)
+-View(serie)
+#es una dorma de hacerla 
+
+
+##otra forma de hacerla es 
+
+# system.time(acci<-acci[-1,-1]) mide el tiempo q tarda mi operacion en r lo hace mas rapido el calculo 
+acci<- read.csv("C://Users//USUARIO//Desktop//accidentes.csv")
+acci<-acci[6:17,-1]
+acci
+#eliminado columnas , no es necesario generar una matrix ,solo se nececita utilizar el 
+trs<-t(t(acci))#para convertir en caracter sin modificar los 
+ctrs<-c(trs)#genera un array 
+#ctrs<-ctrs[ctrs!=""]#esta funcion escoje del array  todos los datos que son los datos fierentes en si me quita mis datos vasios 
+accts<-ts(ctrs, frequency = 12, start = 1997)#solo quedaria  comprobar que concuerda con los datos correspondientes 
+accts
+
+install.packages("fpp")
+require(fpp)
+
+
+##suavizado exponencial simple (SES)
+#ses(mibase , alfa , el numero de pronosticos )
+x11()
+plot(accts)
+mod1<-ses(accts,alpha=.1,h=12)
+mod2<-ses(accts,alpha=.5,h=12)
+mod3<-ses(accts,alpha=.9,h=12)
+#utilizo diferentes alfas para ver como se comporta y estas se pueden ver en la grafica 
+names(mod1)
+plot(mod1,ylab="accidentes",xlab="año",main="numero de accidentes",type="o")
+lines(mod1$mean,col="pink",type="o")
+lines(mod2$mean,col="brown",type="o")
+lines(mod3$mean,col="red",type="o")
+legend("topleft",lty=1,col=c("black","pink","brown","red"),c("datos originales",expression(alpha==.1),expression(alpha==.5),expression(alpha==.9)),pch=11)
+#pch cambia la forma de la linea 
