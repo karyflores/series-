@@ -1,0 +1,31 @@
+
+acci<- data.frame(read.csv("C:/User/escritorio/series/accidentes.csv"))
+
+
+
+View(acci)
+x <-rbind(acci)[6:17,]
+View(x)
+
+y <- as.matrix(rbind(x)[,2])
+a <- as.matrix(rbind(x)[,3])
+b <- as.matrix(rbind(x)[,4])
+c <- as.matrix(rbind(x)[,5])
+d <- as.matrix(rbind(x)[,6])
+e <- as.matrix(rbind(x)[,7])
+f <- as.matrix(rbind(x)[,8])
+g <- as.matrix(rbind(x)[,9])
+h <- as.matrix(rbind(x)[,10])
+i <- as.matrix(rbind(x)[,11])
+j <- as.matrix(rbind(x)[,12])
+k <- as.matrix(rbind(x)[,13])
+l <- as.matrix(rbind(x)[,14])
+m <- as.matrix(rbind(x)[,15])
+n <- as.matrix(rbind(x)[,16])
+o <- as.matrix(rbind(x)[,17])
+p <- as.matrix(rbind(x)[,18])
+q <- as.matrix(rbind(x)[,19])
+r <- as.matrix(rbind(x)[,20])
+s <- as.matrix(rbind(x)[,21])
+serie <- rbind(y,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s)
+View(serie)
