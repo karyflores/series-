@@ -1,0 +1,19 @@
+require(foreign)
+aa<-read.dbf("C://Users//USUARIO//Desktop//coe1t417.dbf")
+View(aa)
+#para saber como ser armnasn las preguntas veo q tengo p1
+#voy a cambiar a numerico porque no me hace la operacion que quiero y me la reconozca 
+aa$P1<-as.numeric(as.character(aa$P1))
+aa$P1A1<-as.numeric(as.character(aa$P1A1))
+aa$P1A2<-as.numeric(as.character(aa$P1A2))
+aa$P1B<-as.numeric(as.character(aa$P1B))
+aa$P1C<-as.numeric(as.character(aa$P1C))
+aa$P1D<-as.numeric(as.character(aa$P1D))
+aa$P1E<-as.numeric(as.character(aa$P1E))
+#subset hace un subconjunto de las condiciones  le digo 
+ocupa<-subset(aa,aa$P1==1|aa$P1A1==1|aa$P1A2==2|aa$P1Ab==1|aa$P1C==1|aa$P1C==2|aa$P1C==3|aa$P1C==4|aa$P1D==1|aa$P1E==1)
+#hacer un table 
+sum(table(aa$P3))
+#mi variable ocupa debe ser igual a mi variable p3 
+table(aa$P1==1)
+#hacer la suma de cuantos contestaron uno de la pegunta 1 
