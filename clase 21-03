@@ -1,0 +1,22 @@
+pib<-read.csv("C://Users//USUARIO//Desktop//PIB.csv",header=F)#header  es para que no me lea los encabezados 
+pibt<-ts(pib,start=1960,frequency = 1)
+install.packages("fpp")
+require(fpp)
+mod1<- ses(pibt,alpha=.1,h=5)
+mod2<-ses(pibt,initial="simple",h=2)
+x11()
+plot(mod1)
+lines(mod1$fitted)
+mod1$fitted
+pibt
+#como no salen los resultados que queremos va acorres con esto y ya queda como el  ejercicio de la libreta 
+mod2<-ses(pibt,alpha=.1,initial="simple",h=5)
+mod2$fitted
+##metodo holt lineal 
+mod3<-holt(pibt,alpha=.8,beta=.5,initial="simple",h=5)
+x11
+plot(mod2,)
+lines(mod2$fitted,col="blue")
+lines(mod3$fitted,col="pink")
+lines(mod2$mean,col="yellow")
+lines(mod3$mean,col="red")
