@@ -1,0 +1,82 @@
+##ejercicio
+#bajar la accion de aeromexico y proponer un arima de (1,0,0) es decir un modelo autoregresivo y plantearlo 
+#con base en la ecuacion de modelo arima ,despues proponer un arima (2,0,0) y plantear la ecuacion 
+#ahora para un arima de (0,0,1) es decir un modelo 
+#MA(1) y plantear la ecuacion  ahora con un ari a de (0,0,2) es decir MA(2) 
+
+
+##para la siguiente serie encontrar la transformacion o la diferenciacion para convertirla en estacionaria  a travez
+#de las graficas y el  adf,test y ademas proponer un modelo arima que ajuste a la serie y confirmen los residuales 
+#sean ruido blanco 
+#requiere(fpp)
+#usnetelec
+#usgdp
+#mcopper
+#enplaments
+#visitors
+#(es con A mayuscula para proponer arima )
+
+aero<-read.csv("C://Users//USUARIO//Desktop//AEROMEX.MX.csv")[,2]
+aerots<-ts(aero,frequency = 252,start=2017)
+require(fpp)
+adf.test (aerots)
+mod1aero<-Arima(aerots,order=c(1,0,0))
+mod1aero
+#ecuacion 
+#yt=c+.9883 y t-1
+mod2aero<-Arima(aerots,order=c(2,0,0))
+mod2aero
+#ecuacion 
+#yt=c+9941yt-1+.0034y t-2
+mod3aero<-Arima(aerots,order=c(0,0,1))
+mod3aero
+#ecuacion MA(1)
+#yt=c+.9678t-1
+mod4aero<-Arima(aerots,order=c(0,0,2))
+mod4aero
+#ecuacion MA(2)
+#yt=c+1.5367t-1+.802t-2
+
+
+###
+#q es 0 es ruido blanco 
+usn<-(usnetelec)
+usn
+usnts<-ts(usn,frequency = 1,start=1949)
+adf.test(usnts)
+#si aplico acf y pacf s antes de la diferenciacion las lineas sobrepasan en las graficas depues las lienas estan abajo 
+dusnt<-diff(usnts)
+adf.test(dusnt)
+x11()
+acf(dusnt)
+x11()
+pacf(dusnt)
+#voy a proponer diferentes modelos #632
+mod1usn<-Arima(usnts,order=c(1,1,0))
+mod1usn
+mod2usn<-Arima(usnts,order = c(1,1,1))
+mod2usn
+mod3usn<-Arima(usnts,order = c(2,2,0)) #de los modelos propuestos es el mas chico 
+mod3usn
+mod4usn<-auto.arima(usnts)
+mod4usn #de todos mid modelos propuestos este es el mas chico (2,1,2)
+x11()
+plot(forecast(mod4usn,h=12),include = 25)
+##como saber el ruido blanco 
+Box.test(residuals(mod4usn),lag=16,fitdf = 1,type = "Ljung-Box") #mo p-value es de .82
+plot(usn)
+tsdisplay(diff(usnts,1))
+#me dan tres graficas y solo una line ade mi ACF sobrepasa las lineas azules 
+
+### usgdp 
+usg<-(usgdp)
+usg
+usgts<-ts(usg,frequency = 1,start=1947)
+adf.test(usgts)#se aplica diferenciacion porque es muy grande mi p-value 
+dusgt<-diff(usgts)
+dusgt
+adf.test(dusgt)
+x11()
+acf(dusgt)
+x11()
+pacf(dusgt)
