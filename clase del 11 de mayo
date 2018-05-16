@@ -1,0 +1,132 @@
+#bajar las series y  probar el Arima y el hol lineal 
+#leer 
+###ejercicio
+##1) bajar series de tiempo del salario minimo(banco de mexico ) y la inflacion y realizar pronosticos con un modelo 
+#holt lineal y arima no estacional  
+###2)de dos series estacionales (las que quiera)
+#aplicar los modelos arima estacional y pronosticar estas series 
+#subirlo y mandarlo al correo 
+
+sal<-read.csv("C://Users//USUARIO//Documents//salario minimo .csv")[,2]
+sal
+sats<-ts(sal,start =1964,frequency = 1)
+sats
+require(fpp)
+adf.test (sats) #no es estacionario porque el p-value es mayor a 0.05estacionaria 
+x11()
+acf(sats)
+x11()
+pacf(sats)
+
+modsal<-auto.arima(sats)
+modsal
+
+x11()
+plot(forecast(modsal,h=12),include = 20)
+
+###si hago diferenciacion ya que sobrepasan las lineas y se popondran varios modelos  3402
+dsats<-diff(sats)
+dsats
+x11()
+acf(dsats)
+x11()
+pacf(dsats)
+adf.test (dsats)
+
+mod1sal<-Arima(sats,order=c(0,0,1))
+mod1sal 
+mod2sal<-Arima(sats,order=c(0,1,0))
+mod2sal ##este es ayn mas bajo con 3398.97
+mod2<-forecast(mod2sal,h=12)
+plot(forecast(mod2sal,h=12),include=18)
+# segun el criterio de aic nos quedarmos con el tercer modelo model
+# mayor vizualisacion al pronostico 18 datos =include
+mod3bim <- auto.arima(salariots)
+mod3bim
+x11()
+plot(forecast(mod2bim,h=12),include = 18)
+######################################################
+plot(salariots)
+## aplha que le de mas peso a los ultimos 
+#
+mod2 <- holt(salariots, alpha = 0.8,beta = 0.5, initial = "simple",h=5)
+x11()
+plot(mod2)
+lines(mod2$fitted,col="blue")
+
+#######
+infla<-read.csv("C://Users//USUARIO//Documents//inflacion .csv")[,2]
+inflats<-ts(infla,start = 1982,frequency = 1)
+require(fpp)
+adf.test (inflats) #no es estacionaria 
+# primero aplicamos la funcion de autocorrelacion para elegir el valor de q
+x11()
+acf(dinflats)
+x11()
+pacf(dinflats)
+# ningun dato sobrepasa la linea
+# lo que se propone es
+mod1inf <- arima(inflats, order=c(0,1,3))
+mod1inf
+#AIcc el menor valor de aicc vamos a elegir
+mod2inf <-arima(dinflacionts, order=c(2,1,4))
+mod2inf
+mod3inf <-arima(dinflacionts, order=c(3,1,12))
+mod3inf
+mod4inf <-arima(dinflacionts, order=c(1,0,1))
+mod4inf
+# segun el criterio de aic nos quedarmos con el tercer modelo model
+# elegimos el mod3bim
+mod4< forecast(mod3inf,h=42)
+x11()
+plot(forecast(mod4inf,h=12),include = 45)
+# mayor vizualisacion al pronostico 18 datos =include
+mod5inf <- auto.arima(inflats)
+mod5inf
+x11()
+plot(forecast(mod5bim,h=12),include = 45)
+plot(inflats)
+## aplha que le de mas peso a los ultimos 
+mod2 <- holt(inflacionts, alpha = 0.8,beta = 0.5, initial = "simple",h=5)
+x11()
+plot(mod2)
+lines(mod2$fitted,col="blue")
+###################
+
+netflix<-read.csv("C://Users//USUARIO//Desktop//NETFLIX.MX.csv")[,5]
+netts<-ts(netflix,frequency = 252,start=2017)
+netflix<-read.csv("C://Users//USUARIO//Desktop//NETFLIX.MX.csv")[,5]
+netts<-ts(netflix,frequency = 252,start=2017)
+require(fpp)
+##ya esta el p-value menor a .5 pero me salen todas las lineas arriba pero si le aplico la dif ya me queda normal 
+dnetts<-diff(netts)
+x11()
+acf(dnetts)
+x11()
+pacf(dnetts)
+modnet<-auto.arima(netts)
+modnet
+x11()
+plot(forecast(modnet,h=12),include = 60)
+##lo voy hacer con modelos auqnue mis lineas no se pasan  y de todas las combinaciones mi auto arima es el mejor 
+mod1net<-Arima(netts,order=c(0,1,0))
+mod1net
+
+
+
+china<-read.csv("C://Users//USUARIO//Desktop//tele.china.csv")[,5]
+chinats<-ts(china,frequency=252,start = 2017)
+adf.test (chinats)
+dchinats<-diff(chinats)
+adf.test(dchinats)
+x11()
+acf(dchinats)
+x11()
+pacf(dchinats)
+modchi<-auto.arima(chinats)
+modchi
+x11()
+plot(forecast(modchi,h=12),include = 35)
+#aplicando algun modelo 
+mod1chi<-Arima(netts,order=c(0,1,0))
+mod1chi
